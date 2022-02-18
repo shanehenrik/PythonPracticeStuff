@@ -1,0 +1,112 @@
+import time
+import random
+weapon = ""
+enemies = ["Jabba", "Dune Worm", "King Kong"]
+enemy = random.choice(enemies)
+
+def print_sleep(message, pause):
+    print(message)
+    time.sleep(pause)
+
+def intro():
+    weapon = "scalpel"
+    print_sleep("Your eyes open....you are in a bathtub", 3)
+    print_sleep(f"You see writing on the wall in blood, it says"
+                 "the {enemy} is watching.", 3)
+    print_sleep("You look down... your kidney has been cut out", 3)
+    print_sleep("You think to yourself \"dang this is a bad day...\"", 3)
+    print_sleep(f"You found the {weapon} they used, maybe you" 
+                 "can defend yourself if needed", 2)
+
+def direction_prompt():
+    print_sleep("The door in the room is locked.", 1)
+    print_sleep("Do you (A) jump out the window", 2)
+    print_sleep("or (B) scream for help", 2)
+    print_sleep("What are you going to do?", 0)
+    choice = ""
+    while choice not in ["A", "B"]:
+        choice = input("Make your selection A or B\n")
+    if choice == "A":
+        jump()
+    elif choice == "B":
+        scream()
+
+def direction_prompttwo():
+    weapon = "lightsaber"
+    print_sleep("Do you (A) jump out the window", 2)
+    print_sleep("or stab yourself (B)", 2)
+    print_sleep("What are you going to do?", 0)
+    choice = ""
+    while choice not in ["A", "B"]:
+        choice = input("Make your selection A or B\n")
+    if choice == "A":
+        jump()
+    elif choice == "B":
+        print("GAME OVER LOSER")
+        exit()
+
+def jump():
+    print_sleep("You jump out the window", 3)
+    print_sleep("You land on a Chrysler Sebring..\"piece of junk\"" 
+                "you think", 2)
+    print_sleep(f"A building immediately explodes. The {enemy} heard the"
+                 "crash and found you!", 2)
+    fightmode()
+
+def fightmode():
+    print_sleep(f"The {enemy} comes at you!", 2)
+    choice = input("Do you wanna try to fight (A) or run like a coward (B)?\n")
+    print(choice)
+    if choice == "A":
+        if weapon == "scalpel":
+            print_sleep(f"Alright here it goes...", 3)
+            print_sleep("nope.... what were you thinking...it eats you...", 2)
+            print_sleep("Now you're dead and no songs will ever be sung" 
+                        "about you", 2)
+            print("GAME OVER LOSER")
+            exit()
+        elif weapon == "lightsaber":
+            print_sleep(f"The large {enemy} tried to eat you but you unsheath" 
+                         "your brand new lightsaber.", 2)
+            print_sleep(f"The Lightsaber of Luketh glows bright blue as you" 
+                         "slice right through the teeth of {enemy}", 3)
+            print_sleep(f"The {enemy} looks in a mirror and sees it has no" 
+                         "teeth and flies away to its dentist", 2)
+            print_sleep("You won! That will take at least 1 week before"
+                        "he comes back", 2)
+    elif choice == "B":
+        print_sleep("You coward...ughh... ok you ran and everyone laughed" 
+                    "at you at the nearby pub.", 2)
+        print_sleep("They knock you out.", 2)
+        print_sleep("You wake up back in the same bathtub.", 2)
+        direction_prompt()
+    while choice not in ["A", "B"]:
+        choice = input("LISTEN! Do you wanna try to fight (A) or run" 
+                       "like a coward (B)?\n")
+
+def scream():
+    weapon = "scalpel"
+    print_sleep("You scream for help!", 2)
+    print_sleep("Your cowardly screams rattles loose a picture" 
+                "off the wall", 2)
+    print_sleep("It falls to the ground and smashes", 2)
+    print_sleep("You look up and see the picture was blocking a box", 2)
+    print_sleep("Inside the box you find the Lightsaber of Luketh", 2)
+    print_sleep(f"You throw away your crappy {weapon}", 2)
+    weapon = "lightsaber"
+    direction_prompttwo()
+
+def play_again():
+    choice = ""
+    choice = input("Wanna play again? (y/n)")
+    while choice not in ["y", "n"]:
+        choice = input("Wanna play again? (y/n)")
+    if choice == "n":
+        print_sleep("Whatever, bye I guess", 2)
+        return "GAME OVER LOSER"
+    elif choice == "y":
+        print_sleep("Nice, you may be a hero yet..", 2)
+        Intro()
+
+intro()
+direction_prompt()
