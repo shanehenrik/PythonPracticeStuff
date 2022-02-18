@@ -1,0 +1,195 @@
+import random
+import time
+
+moves = ['rock', 'paper', 'scissors']
+# ASCII HANDS FROM ASCII ASCIIART.EU by VERONICA KARLSSON
+rockhand = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+paperhand = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+scissorhand = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+computer_score = 0
+player_score = 0
+rounds = 1
+# computer_decision = ""
+# last_human = ""
+
+
+class Player:
+    # Constructs the initial state of the computer player
+    def __init__(self, compmove):
+        self.compmove = compmove
+
+    def learn(self, last_human, computer_decision):
+        self.computer_decision = computer_decision
+        self.last_human = last_human
+
+
+# Computer that always picks rock
+class AlwaysRockPlayer(Player):
+    def compmove(self):
+        return moves[0]
+
+    # This does nothing
+    def learn(self, last_human, computer_decision):
+        pass
+
+
+# Computer that always picks random
+class RandomPlayer(Player):
+    def compmove(self):
+        return random.choice(moves)
+
+    # This does nothing
+    def learn(self, last_human, computer_decision):
+        pass
+
+
+# Computer that picks next move in line after HumanPlayer's
+class CyclePlayer(Player):
+    def compmove(self):
+        if computer_decision == moves[0]:
+            return moves[1]
+        if computer_decision == moves[1]:
+            return moves[2]
+        else:
+            return moves[0]
+
+    # This does nothing
+    def learn(self, last_human, computer_decision):
+        pass
+
+
+# Computer that picks the choice that you made last round
+class ReflectPlayer(Player):
+    def compmove(self):
+        return last_human
+
+    # This does nothing
+    def learn(self, last_human, computer_decision):
+        pass
+
+
+# This does nothing
+class Game:
+    def __init__(self, p1, p2):
+        self.p1 = p1
+        self.p2 = p2
+
+    def play_round(self):
+        move1 = self.p1.move()
+        move2 = self.p2.move()
+        print(f"Player 1: {move1}  Player 2: {move2}")
+        self.p1.learn(move1, move2)
+        self.p2.learn(move2, move1)
+
+    def play_game(self):
+        print("Game start!")
+        for round in range(3):
+            print(f"Round {round}:")
+            self.play_round()
+        print("Game over!")
+
+
+while rounds != 4:
+    # You, the player, your decision
+    HumanPlayer = input(f"\033[1m <<<<<<<< ROUND {rounds} >>>>>>>> "
+                        "\033[0m \n Rock, Paper, or Scissors?\n").lower()
+    print(f"You choose {HumanPlayer}")
+    time.sleep(1)
+    while HumanPlayer not in moves:
+        print("That is not a recognized option - try again!\n")
+        time.sleep(1)
+        HumanPlayer = input(f"\033[1m <<<<<<<< ROUND {rounds}"
+                             ">>>>>>>> \033[0m \n Rock, Paper, "
+                             "or Scissors?\n").lower()
+    if HumanPlayer == "rock":
+        print(rockhand)
+    elif HumanPlayer == "paper":
+        print(paperhand)
+    elif HumanPlayer == "scissors":
+        print(scissorhand)
+    time.sleep(1)
+
+    choices = [RandomPlayer.compmove(Player),
+               AlwaysRockPlayer.compmove(Player)]
+
+    if rounds > 1:
+        choices.extend([CyclePlayer.compmove(Player),
+                        ReflectPlayer.compmove(Player)])
+
+    # Computer choosing between its players
+    computer_decision = random.choice(choices)
+    print(f"The computer chose {computer_decision}")
+    if computer_decision == "rock":
+        print(rockhand)
+    elif computer_decision == "paper":
+        print(paperhand)
+    else:
+        print(scissorhand)
+    time.sleep(1)
+    last_human = HumanPlayer
+
+    # Game Logic (player chooses rock)
+    if HumanPlayer == 'rock' and computer_decision == 'scissors':
+        player_score += 1
+        rounds += 1
+        print("You win this round!\n")
+    if HumanPlayer == 'rock' and computer_decision == 'paper':
+        computer_score += 1
+        rounds += 1
+        print("You lose this round!\n")
+    # Game Logic (player chooses scissors)
+    if HumanPlayer == 'scissors' and computer_decision == 'paper':
+        player_score += 1
+        rounds += 1
+        print("You win this round!\n")
+    if HumanPlayer == 'scissors' and computer_decision == 'rock':
+        computer_score += 1
+        rounds += 1
+        print("You lose this round!\n")
+    # Game Logic (player chooses paper)
+    if HumanPlayer == 'paper' and computer_decision == 'rock':
+        player_score += 1
+        rounds += 1
+        print("You win this round!\n")
+    if HumanPlayer == 'paper' and computer_decision == 'scissors':
+        computer_score += 1
+        rounds += 1
+        print("You lose this round!\n")
+    # Game Logic (tie game)
+    if HumanPlayer == computer_decision:
+        print("This round was a tie!\n")
+        rounds += 1
+
+print("The final score is you with "
+      f"\033[1m {player_score} \033[0m and the computer"
+      f" with \033[1m {computer_score} \033[0m\n")
+time.sleep(1)
+
+if player_score > computer_score:
+    print("\033[1m **** YOU WON THE WHOLE GAME! **** \033[0m")
+elif player_score < computer_score:
+    print("\033[1m **** YOU LOST THE WHOLE GAME **** \033[0m")
+else:
+    print("\033[1m  ********* NO ONE WINS,"
+          "YOU BOTH TIED THIS GAME *********  \033[0m")
