@@ -12,10 +12,10 @@ def intro():
     weapon = "scalpel"
     print_sleep("Your eyes open....you are in a bathtub", 3)
     print_sleep(f"You see writing on the wall in blood, it says"
-                 "the {enemy} is watching.", 3)
+                 f" the {enemy} is watching.", 3)
     print_sleep("You look down... your kidney has been cut out", 3)
     print_sleep("You think to yourself \"dang this is a bad day...\"", 3)
-    print_sleep(f"You found the {weapon} they used, maybe you" 
+    print_sleep(f"You found the {weapon} they used, maybe you " 
                  "can defend yourself if needed", 2)
 
 def direction_prompt():
@@ -66,16 +66,16 @@ def fightmode():
             print("GAME OVER LOSER")
             exit()
         elif weapon == "lightsaber":
-            print_sleep(f"The large {enemy} tried to eat you but you unsheath" 
+            print_sleep(f"The large {enemy} tried to eat you but you unsheath " 
                          "your brand new lightsaber.", 2)
-            print_sleep(f"The Lightsaber of Luketh glows bright blue as you" 
+            print_sleep(f"The Lightsaber of Luketh glows bright blue as you " 
                          "slice right through the teeth of {enemy}", 3)
-            print_sleep(f"The {enemy} looks in a mirror and sees it has no" 
+            print_sleep(f"The {enemy} looks in a mirror and sees it has no " 
                          "teeth and flies away to its dentist", 2)
             print_sleep("You won! That will take at least 1 week before"
                         "he comes back", 2)
     elif choice == "B":
-        print_sleep("You coward...ughh... ok you ran and everyone laughed" 
+        print_sleep("You coward...ughh... ok you ran and everyone laughed " 
                     "at you at the nearby pub.", 2)
         print_sleep("They knock you out.", 2)
         print_sleep("You wake up back in the same bathtub.", 2)
@@ -87,7 +87,7 @@ def fightmode():
 def scream():
     weapon = "scalpel"
     print_sleep("You scream for help!", 2)
-    print_sleep("Your cowardly screams rattles loose a picture" 
+    print_sleep("Your cowardly screams rattles loose a picture " 
                 "off the wall", 2)
     print_sleep("It falls to the ground and smashes", 2)
     print_sleep("You look up and see the picture was blocking a box", 2)
